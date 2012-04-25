@@ -6,7 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
         <style>
-        audio {
+        #passage-audio {
             display: block;
             margin-top: 1em;
             margin-bottom: 1em;
@@ -14,6 +14,15 @@
             font-size: 10px;
             background: black;
             color: white;
+        }
+        .passage q {
+            quotes: "“" "”" "‘" "’";
+        }
+        .passage p {
+            line-height: 1.4em;
+        }
+        .verse-start {
+            line-height: 0;
         }
         span[data-begin].speaking {
             background-color: yellow;
@@ -48,10 +57,10 @@
                 (<a href="http://www.esv.org" class="copyright"><abbr title="English Standard Version">ESV</abbr></a>)
             </h2>
 
-            <audio id="passage-audio" controls="">
-                <source src="./Luke.2.1-Luke.2.20.mp3" type="audio/mp3" />
-                <source src="./Luke.2.1-Luke.2.20.ogg" type="audio/ogg" />
-                <source src="./Luke.2.1-Luke.2.20.wav" type="audio/wav" />
+            <audio id="passage-audio" class="passage" controls="">
+                <source src="audio/Luke.2.1-Luke.2.20.mp3" type="audio/mp3" />
+                <source src="audio/Luke.2.1-Luke.2.20.ogg" type="audio/ogg" />
+                <source src="audio/Luke.2.1-Luke.2.20.wav" type="audio/wav" />
                 <p class="error"><em><strong>Notice:</strong> Your browser doesn't appear to support HTML5 Audio. Please use try Firefox 3.5, Chrome, or Safari.</em></p>
             </audio>
 
@@ -59,7 +68,7 @@
                 <p class="error"><em><strong>Notice:</strong> You must have JavaScript enabled/available to try this HTML5 Audio read along.</em></p>
             </noscript>
 
-            <div id="passage-text">
+            <div id="passage-text" class="passage">
                 <!--<h3 hidden>The Birth of Jesus Christ</h3>-->
                 <p><sup class="verse-start">1</sup><span data-dur="0.154" data-begin="0.775">In</span> <span data-dur="0.28" data-begin="0.929">those</span> <span data-dur="0.29" data-begin="1.218">days</span> <span data-dur="0.131" data-begin="1.508">a</span> <span data-dur="0.525" data-begin="1.639">decree</span> <span data-dur="0.191" data-begin="2.165">went</span> <span data-dur="0.225" data-begin="2.355">out</span> <span data-dur="0.245" data-begin="2.583">from</span> <span data-dur="0.438" data-begin="2.828">Caesar</span> <span data-dur="0.637" data-begin="3.267">Augustus</span> <span data-dur="0.166" data-begin="4.03">that</span> <span data-dur="0.268" data-begin="4.216">all</span> <span data-dur="0.111" data-begin="4.486">the</span> <span data-dur="0.411" data-begin="4.594">world</span> <span data-dur="0.205" data-begin="5.006">should</span> <span data-dur="0.134" data-begin="5.211">be</span> <span data-dur="0.529" data-begin="5.344">registered</span>. <sup class="verse-start">2</sup><span data-dur="0.201" data-begin="6.675">This</span> <span data-dur="0.124" data-begin="6.876">was</span> <span data-dur="0.11" data-begin="7">the</span> <span data-dur="0.321" data-begin="7.11">first</span> <span data-dur="0.762" data-begin="7.431">registration</span> <span data-dur="0.164" data-begin="8.193">when</span> <span data-dur="0.474" data-begin="8.357">Quirinius</span> <span data-dur="0.206" data-begin="8.834">was</span> <span data-dur="0.338" data-begin="9.041">governor</span> <span data-dur="0.082" data-begin="9.379">of</span> <span data-dur="0.477" data-begin="9.46">Syria</span>. <sup class="verse-start">3</sup><span data-dur="0.119" data-begin="10.676">And</span> <span data-dur="0.24" data-begin="10.794">all</span> <span data-dur="0.186" data-begin="11.034">went</span> <span data-dur="0.087" data-begin="11.22">to</span> <span data-dur="0.139" data-begin="11.307">be</span> <span data-dur="0.592" data-begin="11.446">registered</span>, <span data-dur="0.251" data-begin="12.284">each</span> <span data-dur="0.093" data-begin="12.572">to</span> <span data-dur="0.134" data-begin="12.665">his</span> <span data-dur="0.275" data-begin="12.799">own</span> <span data-dur="0.467" data-begin="13.074">town</span>. <sup class="verse-start">4</sup><span data-dur="0.184" data-begin="14.369">And</span> <span data-dur="0.358" data-begin="14.553">Joseph</span> <span data-dur="0.351" data-begin="14.911">also</span> <span data-dur="0.128" data-begin="15.262">went</span> <span data-dur="0.152" data-begin="15.39">up</span> <span data-dur="0.215" data-begin="15.595">from</span> <span data-dur="0.541" data-begin="15.811">Galilee</span>, <span data-dur="0.074" data-begin="16.557">from</span> <span data-dur="0.121" data-begin="16.632">the</span> <span data-dur="0.236" data-begin="16.752">town</span> <span data-dur="0.097" data-begin="16.988">of</span> <span data-dur="0.559" data-begin="17.085">Nazareth</span>, <span data-dur="0.154" data-begin="17.966">to</span> <span data-dur="0.575" data-begin="18.12">Judea</span>, <span data-dur="0.129" data-begin="18.823">to</span> <span data-dur="0.059" data-begin="18.952">the</span> <span data-dur="0.31" data-begin="19.011">city</span> <span data-dur="0.166" data-begin="19.321">of</span> <span data-dur="0.393" data-begin="19.487">David</span>, <span data-dur="0.161" data-begin="20.029">which</span> <span data-dur="0.109" data-begin="20.19">is</span> <span data-dur="0.307" data-begin="20.321">called</span> <span data-dur="0.642" data-begin="20.628">Bethlehem</span>, <span data-dur="0.317" data-begin="21.76">because</span> <span data-dur="0.116" data-begin="22.077">he</span> <span data-dur="0.104" data-begin="22.193">was</span> <span data-dur="0.166" data-begin="22.297">of</span> <span data-dur="0.059" data-begin="22.463">the</span> <span data-dur="0.412" data-begin="22.522">house</span> <span data-dur="0.155" data-begin="22.935">and</span> <span data-dur="0.384" data-begin="23.09">lineage</span> <span data-dur="0.175" data-begin="23.474">of</span> <span data-dur="0.421" data-begin="23.648">David</span>, <sup class="verse-start">5</sup><span data-dur="0.127" data-begin="24.714">to</span> <span data-dur="0.172" data-begin="24.84">be</span> <span data-dur="0.53" data-begin="25.013">registered</span> <span data-dur="0.125" data-begin="25.543">with</span> <span data-dur="0.515" data-begin="25.668">Mary</span>, <span data-dur="0.172" data-begin="26.183">his</span> <span data-dur="0.607" data-begin="26.355">betrothed</span>, <span data-dur="0.123" data-begin="27.134">who</span> <span data-dur="0.166" data-begin="27.257">was</span> <span data-dur="0.167" data-begin="27.423">with</span> <span data-dur="0.513" data-begin="27.59">child</span>. <sup class="verse-start">6</sup><span data-dur="0.161" data-begin="29.448">And</span> <span data-dur="0.362" data-begin="29.609">while</span> <span data-dur="0.159" data-begin="29.97">they</span> <span data-dur="0.166" data-begin="30.129">were</span> <span data-dur="0.436" data-begin="30.295">there</span>, <span data-dur="0.159" data-begin="31.072">the</span> <span data-dur="0.431" data-begin="31.231">time</span> <span data-dur="0.277" data-begin="31.662">came</span> <span data-dur="0.161" data-begin="31.939">for</span> <span data-dur="0.093" data-begin="32.1">her</span> <span data-dur="0.107" data-begin="32.193">to</span> <span data-dur="0.233" data-begin="32.299">give</span> <span data-dur="0.352" data-begin="32.522">birth</span>. <sup class="verse-start">7</sup><span data-dur="0.133" data-begin="33.972">And</span> <span data-dur="0.213" data-begin="34.105">she</span> <span data-dur="0.277" data-begin="34.318">gave</span> <span data-dur="0.253" data-begin="34.596">birth</span> <span data-dur="0.069" data-begin="34.888">to</span> <span data-dur="0.171" data-begin="34.957">her</span> <span data-dur="0.602" data-begin="35.128">firstborn</span> <span data-dur="0.56" data-begin="35.73">son</span> <span data-dur="0.166" data-begin="36.491">and</span> <span data-dur="0.342" data-begin="36.657">wrapped</span> <span data-dur="0.153" data-begin="36.998">him</span> <span data-dur="0.119" data-begin="37.152">in</span> <span data-dur="0.55" data-begin="37.271">swaddling</span> <span data-dur="0.542" data-begin="37.82">cloths</span> <span data-dur="0.154" data-begin="38.644">and</span> <span data-dur="0.287" data-begin="38.798">laid</span> <span data-dur="0.176" data-begin="39.085">him</span> <span data-dur="0.087" data-begin="39.261">in</span> <span data-dur="0.092" data-begin="39.348">a</span> <span data-dur="0.604" data-begin="39.44">manger</span>, <span data-dur="0.277" data-begin="40.182">because</span> <span data-dur="0.131" data-begin="40.46">there</span> <span data-dur="0.151" data-begin="40.591">was</span> <span data-dur="0.213" data-begin="40.742">no</span> <span data-dur="0.312" data-begin="40.975">place</span> <span data-dur="0.121" data-begin="41.287">for</span> <span data-dur="0.158" data-begin="41.408">them</span> <span data-dur="0.116" data-begin="41.566">in</span> <span data-dur="0.111" data-begin="41.683">the</span> <span data-dur="0.406" data-begin="41.794">inn</span>.</p>
                 <!--<h3 hidden>The Shepherds and the Angels</h3>-->
