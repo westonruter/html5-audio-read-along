@@ -1,7 +1,6 @@
 var ReadAlong = {
     text_element: null,
     audio_element: null,
-    rate_control_element: null,
     
     words: [],
     
@@ -19,7 +18,6 @@ var ReadAlong = {
         this.addEventListeners();
         
         // Once set up, enable the UI
-        this.rate_control_element.disabled = false;
         this.audio_element.hidden = false;
     },
     
@@ -133,14 +131,6 @@ var ReadAlong = {
     
     addEventListeners: function () {
         var that = this;
-        
-        var on_rate_control_change = function () {
-            var output = this.parentNode.getElementsByTagName('output')[0];
-            output.textContent = String(Math.round(this.valueAsNumber*10)/10);
-            that.audio_element.playbackRate = this.valueAsNumber;
-        };
-        that.rate_control_element.addEventListener('change', on_rate_control_change);
-        on_rate_control_change.call(that.rate_control_element);
         
         /**
          * Select next word (at that.audio_element.currentTime) when playing begins
