@@ -16,6 +16,12 @@
             height: 2em;
             width: 100%;
         }
+        #passage-text.speaking {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;  
+            user-select: none;
+        }
         q {
             quotes: "“" "”" "‘" "’";
         }
@@ -30,6 +36,7 @@
         }
         span[data-begin].speaking {
             background-color: yellow;
+            box-shadow: 0px 0px 4px yellow;
         }
         span[data-begin] {
             cursor: pointer;
@@ -52,6 +59,13 @@
         <details>
             <summary>Background for this demo</summary>
             <p>@todo My writeup</p>
+            
+            <!--
+            <details>
+            dataset
+            classList
+            Audio
+            -->
         </details>
 
         <article>
@@ -60,7 +74,8 @@
                 (<a href="http://www.esv.org" class="copyright"><abbr title="English Standard Version">ESV</abbr></a>)
             </h2>
 
-            <audio id="passage-audio" class="passage" controls="">
+            <audio id="passage-audio" class="passage" controls hidden>
+                <!-- @todo webm? -->
                 <source src="audio/Luke.2.1-Luke.2.20.mp3" type="audio/mp3"s>
                 <source src="audio/Luke.2.1-Luke.2.20.ogg" type="audio/ogg"s>
                 <source src="audio/Luke.2.1-Luke.2.20.wav" type="audio/wav"s>
@@ -101,143 +116,12 @@
             <a href="http://x-team.com/" title="My employer">X-Team</a>
         </footer>
 
+        <script src="read-along.js"></script>
         <script>
-        (function(){
-            var passage_text = document.getElementById('passage-text');
-            var passage_audio = document.getElementById('passage-audio');
-
-            /**
-             * Build an index of all of the words that can be read along with their begin,
-             * and end times, and the DOM element representing the word.
-             */
-            var word_times = [];
-            Array.prototype.forEach.call(passage_text.querySelectorAll('[data-begin]'), function (word_el) {
-                var word_time = {
-                    'begin': parseFloat(word_el.dataset.begin),
-                    'dur': parseFloat(word_el.dataset.dur),
-                    'word': word_el
-                };
-                word_time.index = word_times.length;
-                word_time.end = word_time.begin + word_time.dur;
-                word_el.dataset.index = word_time.index;
-                word_times.push(word_time);
-            });
-
-            /**
-             * Find the next word that should be played (or that is currently being played)
-             * @todo Note: this would better be implemented as a binary search
-             */
-            function getNextWordTime() {
-                var word_time = null;
-                var currentTime = passage_audio.currentTime;
-                var i;
-                var len;
-                var is_next_word;
-                for (i = 0, len = word_times.length; i < len; i += 1) {
-                    is_next_word = (
-                        (
-                            currentTime >= word_times[i].begin
-                            &&
-                            currentTime < word_times[i].end
-                        )
-                        ||
-                        (currentTime < word_times[i].begin)
-                    );
-                    if (is_next_word) {
-                        return word_times[i];
-                    }
-                }
-                return null;
-            }
-
-            var timeoutSelectNext;
-
-            function removeSelection() {
-                Array.prototype.forEach.call(passage_text.querySelectorAll('span[data-begin].speaking'), function (el) {
-                    el.classList.remove('speaking');
-                });
-            }
-
-            /**
-             * Select the next word that is going to be read or the word that is being read right now
-             * @param {Boolean} hold  Whether or not the subsequent word should automatically be selected
-             * @todo 'hold' is a bad name
-             */
-            function selectNextWord(hold) {
-                var next;
-                function select(hold) {
-                    removeSelection();
-                    next.word.classList.add('speaking');
-                    if (!hold) {
-                        timeoutSelectNext = setTimeout(function () {
-                            removeSelection();
-                            if (!passage_audio.paused) {
-                                selectNextWord();
-                            }
-                        }, Math.round((next.end - passage_audio.currentTime)*1000));
-                    }
-                }
-
-                clearTimeout(timeoutSelectNext);
-                next = getNextWordTime();
-                if(next){
-
-                    //Select now
-                    if(hold || passage_audio.currentTime >= next.begin){
-                        select(hold);
-                    }
-                    //Select later
-                    else {
-                        timeoutSelectNext = setTimeout(function () {
-                            select();
-                        }, Math.round((next.begin - passage_audio.currentTime) * 1000));
-                    }
-                }
-            }
-
-            /**
-             * Select next word (at passage_audio.currentTime) when playing starts
-             */
-            passage_audio.addEventListener('play', function () {
-                selectNextWord();
-            });
-
-            /**
-             * Abandon seeking the next word because we're paused
-             */
-            passage_audio.addEventListener('pause', function () {
-                clearTimeout(timeoutSelectNext);
-            });
-
-            /**
-             * Seek by clicking (event delegation)
-             */
-            passage_text.addEventListener('click', function(e) {
-                if (!e.target.hasAttribute('data-begin')) {
-                    return;
-                }
-
-                var i = e.target.dataset.index;
-                passage_audio.currentTime = word_times[i].begin + 0.001; //Note: times apparently cannot be exactly set and sometimes select too early
-                selectNextWord();
-            });
-
-            /**
-             * Play a word when double-clicking (event delegation)
-             * Only plays the single word.
-             */
-            passage_text.addEventListener('dblclick', function (e) {
-                passage_audio.play();
-            });
-
-            /**
-             * Select a word when seeking
-             */
-            passage_audio.addEventListener('seeked', function (e) {
-                selectNextWord(e.target.paused /* for hold, probably always true */);
-            });
-
-        }());
+        ReadAlong.init({
+            text_element: document.getElementById('passage-text'),
+            audio_element: document.getElementById('passage-audio')
+        });
         </script>
     </body>
 </html>
