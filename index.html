@@ -79,8 +79,14 @@
                 <source src="audio/Luke.2.1-Luke.2.20.mp3" type="audio/mp3"s>
                 <source src="audio/Luke.2.1-Luke.2.20.ogg" type="audio/ogg"s>
                 <source src="audio/Luke.2.1-Luke.2.20.wav" type="audio/wav"s>
-                <p class="error"><em><strong>Notice:</strong> Your browser doesn't appear to support HTML5 Audio. Please use try Firefox 3.5, Chrome, or Safari.</em></p>
+                <em class="error"><strong>Notice:</strong> Your browser doesn't appear to support HTML5 Audio. Please use try Firefox 3.5, Chrome, or Safari.</em>
             </audio>
+            
+            <p>
+                <label for="playback-rate">Reading rate:</label>
+                <input id="playback-rate" type="range" min="0.5" max="2.0" value="1.0" step="0.1" disabled>
+                <output>1</output>&times;
+            </p>
 
             <noscript>
                 <p class="error"><em><strong>Notice:</strong> You must have JavaScript enabled/available to try this HTML5 Audio read along.</em></p>
@@ -120,7 +126,8 @@
         <script>
         ReadAlong.init({
             text_element: document.getElementById('passage-text'),
-            audio_element: document.getElementById('passage-audio')
+            audio_element: document.getElementById('passage-audio'),
+            rate_control_element: document.getElementById('playback-rate')
         });
         </script>
     </body>
