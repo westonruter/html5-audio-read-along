@@ -80,8 +80,10 @@ var ReadAlong = {
         var current_word = this.getCurrentWord();
         var is_playing = !this.audio_element.paused;
         
-        this.removeWordSelection();
-        current_word.element.classList.add('speaking');
+        if (!current_word.element.classList.contains('speaking')) {
+            this.removeWordSelection();
+            current_word.element.classList.add('speaking');
+        }
 
         /**
          * The timeupdate Media event does not fire repeatedly enough to be
@@ -135,7 +137,8 @@ var ReadAlong = {
         /**
          * Select next word (at that.audio_element.currentTime) when playing begins
          */
-        that.audio_element.addEventListener('play', function () {
+        that.audio_element.addEventListener('play', function (e) {
+            console.info(e.type);
             
             //var selection = window.getSelection();
             //if (selection.rangeCount !== 0) {
@@ -172,7 +175,8 @@ var ReadAlong = {
         /**
          * Abandon seeking the next word because we're paused
          */
-        that.audio_element.addEventListener('pause', function () {
+        that.audio_element.addEventListener('pause', function (e) {
+            console.info(e.type);
             that.selectCurrentWord(); // We always want a word to be selected
             that.text_element.classList.remove('speaking');
             
@@ -210,6 +214,7 @@ var ReadAlong = {
          * @todo Should it stop playing once the duration is over?
          */
         that.text_element.addEventListener('dblclick', function (e) {
+            console.info(e.type);
             e.preventDefault();
             //that.audio_element.play();
         });
@@ -219,6 +224,23 @@ var ReadAlong = {
          */
         that.audio_element.addEventListener('seeked', function (e) {
             that.selectCurrentWord();
+            
+            /**
+             * Address probem with Chrome where sometimes it seems to get stuck upon seeked:
+             * http://code.google.com/p/chromium/issues/detail?id=99749
+             */
+            var audio_element = this;
+            if (!audio_element.paused) {
+                var previousTime = audio_element.currentTime;
+                setTimeout(function () {
+                    if (!audio_element.paused && previousTime === audio_element.currentTime) {
+                        console.info('unsticking');
+                        audio_element.currentTime += 0.01; // Attempt to unstick
+                    }
+                }, 500);
+            }
+            
+            
         });
     },
     
