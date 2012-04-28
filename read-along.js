@@ -138,7 +138,7 @@ var ReadAlong = {
          * Select next word (at that.audio_element.currentTime) when playing begins
          */
         that.audio_element.addEventListener('play', function (e) {
-            console.info(e.type);
+            console.info(e.type); // debug
             
             //var selection = window.getSelection();
             //if (selection.rangeCount !== 0) {
@@ -176,7 +176,7 @@ var ReadAlong = {
          * Abandon seeking the next word because we're paused
          */
         that.audio_element.addEventListener('pause', function (e) {
-            console.info(e.type);
+            console.info(e.type); // debug
             that.selectCurrentWord(); // We always want a word to be selected
             that.text_element.classList.remove('speaking');
             
@@ -214,7 +214,7 @@ var ReadAlong = {
          * @todo Should it stop playing once the duration is over?
          */
         that.text_element.addEventListener('dblclick', function (e) {
-            console.info(e.type);
+            console.info(e.type); // debug
             e.preventDefault();
             //that.audio_element.play();
         });
@@ -223,6 +223,7 @@ var ReadAlong = {
          * Select a word when seeking
          */
         that.audio_element.addEventListener('seeked', function (e) {
+            console.info(e.type); // debug
             that.selectCurrentWord();
             
             /**
@@ -234,7 +235,7 @@ var ReadAlong = {
                 var previousTime = audio_element.currentTime;
                 setTimeout(function () {
                     if (!audio_element.paused && previousTime === audio_element.currentTime) {
-                        console.info('unsticking');
+                        console.info('unsticking'); // debug
                         audio_element.currentTime += 0.01; // Attempt to unstick
                     }
                 }, 500);
