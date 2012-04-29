@@ -81,6 +81,22 @@
             -->
         </details>
 
+        <h2>Mouse/touch interface</h2>
+        <ul>
+            <li>Click the audio controls to play and pause the speech.</li>
+            <li>Click a word to seek the audio to that point, whether it is currently playing or not.</li>
+            <li>Double-click on a word to seek and play from that word.</li>
+            <li><em>Todo: Allow a span of words to be selected and for that sub-passage to be played.</em></li>
+        </ul>
+        
+        <h2>Keyboard interface</h2>
+        <ul>
+            <li><kbd>Space</kbd> toggles play/pause state.</li>
+            <li>Words in list are focusable and so can be navigated via tabbing.</li>
+            <li>Once a word is focused, you may hit <kbd>Enter</kbd> to seek the audio to that point.</li>
+        </ul>
+            
+        
         <article>
             <h2>
                 <a href="http://www.esvbible.org/Luke+2.1-20/" title="View Luke 2:1–20 on the ESV Bible website" target="_blank">Luke 2:1–20</a>
@@ -107,6 +123,10 @@
             </p>
             <p class="playback-rate-unavailable" hidden>
                 <em>(It seems your browser does not support <code>HTMLMediaElement.playbackRate</code> (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=495040" title="Bug #495040 for Firefox">Bugzilla</a>), so you will not be able to change the speech rate.)</em>
+            </p>
+            <p class="autofocus-current-word" hidden>
+                <input type="checkbox" id="autofocus-current-word" checked>
+                <label for="autofocus-current-word">Automatically keep keyboard focus on currently-spoken word.</label>
             </p>
 
             <noscript>
@@ -148,7 +168,8 @@
         window.addEventListener('load', function (e) {
             var args = {
                 text_element: document.getElementById('passage-text'),
-                audio_element: document.getElementById('passage-audio')
+                audio_element: document.getElementById('passage-audio'),
+                autofocus_current_word: document.getElementById('autofocus-current-word').checked
             };
             
             if (!args.audio_element.canPlayType) {
@@ -184,13 +205,19 @@
             else {
                 document.querySelector('.playback-rate-unavailable').hidden = false;
             }
-
+            
             ReadAlong.init(args);
+            
+            document.getElementById('autofocus-current-word').addEventListener('change', function (e) {
+                ReadAlong.autofocus_current_word = this.checked;
+            }, false);
+            
             document.querySelector('.passage-audio').hidden = false;
             if (supports_playback_rate) {
                 document.querySelector('.playback-rate').hidden = false;
             }
-            args.text_element.classList.add('initialized');
+            document.querySelector('.autofocus-current-word').hidden = false;
+            document.body.classList.add('initialized');
             
         }, false);
         </script>

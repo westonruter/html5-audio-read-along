@@ -4,6 +4,7 @@ var ReadAlong = {
     text_element: null,
     audio_element: null,
     rate_range_element: null,
+    autofocus_current_word: true,
 
     words: [],
 
@@ -33,7 +34,7 @@ var ReadAlong = {
                 'dur': parseFloat(word_el.dataset.dur),
                 'element': word_el
             };
-            word_el.setAttribute('tabindex', '0');
+            word_el.tabIndex = 0; // to make it focusable/interactive
             word.index = index;
             word.end = word.begin + word.dur;
             word_el.dataset.index = word.index;
@@ -86,7 +87,9 @@ var ReadAlong = {
         if (!current_word.element.classList.contains('speaking')) {
             this.removeWordSelection();
             current_word.element.classList.add('speaking');
-            current_word.element.focus();
+            if (this.autofocus_current_word) {
+                current_word.element.focus();
+            }
         }
 
         /**
