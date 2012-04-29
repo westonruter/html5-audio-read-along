@@ -9,11 +9,14 @@
         h2 {
             margin-bottom: 1em;
         }
+        .passage-audio {
+            
+        }
         #passage-audio {
-            display: block;
-            margin-top: 1.5em;
-            margin-bottom: 1.5em;
-            height: 2em;
+            /*display: block;*/
+            /*margin-top: 1.5em;*/
+            /*margin-bottom: 1.5em;*/
+            /*height: 2em;*/
             width: 100%;
         }
         #passage-text.speaking {
@@ -21,6 +24,12 @@
             -webkit-user-select: none;
             -ms-user-select: none;  
             user-select: none;
+        }
+        .playback-rate {
+            margin-left: 2em;
+        }
+        .playback-rate label {
+            font-weight: bold;
         }
         q {
             quotes: "“" "”" "‘" "’";
@@ -34,15 +43,15 @@
         .verse-start {
             line-height: 0;
         }
-        span[data-begin]:hover {
+        .initialized span[data-begin]:hover {
             background-color: #FFFFCA;
             box-shadow: 0px 0px 4px orange;
         }
-        span[data-begin].speaking {
+        .initialized span[data-begin].speaking {
             background-color: yellow;
             box-shadow: 0px 0px 4px yellow;
         }
-        span[data-begin] {
+        .initialized span[data-begin] {
             cursor: pointer;
         }
         .error {
@@ -51,6 +60,9 @@
         footer {
             line-height: 1.1em;
             margin-top: 1em;
+        }
+        footer img {
+            vertical-align: text-bottom;
         }
         </style>
     </head>
@@ -72,16 +84,30 @@
         <article>
             <h2>
                 <a href="http://www.esvbible.org/Luke+2.1-20/" title="View Luke 2:1–20 on the ESV Bible website" target="_blank">Luke 2:1–20</a>
-                (<a href="http://www.esv.org" class="copyright"><abbr title="English Standard Version">ESV</abbr></a>)
+                (<a href="http://www.esv.org/"><abbr title="English Standard Version">ESV</abbr></a>)
             </h2>
 
-            <audio id="passage-audio" class="passage" controls hidden>
-                <!-- @todo webm? -->
-                <source src="audio/Luke.2.1-Luke.2.20.mp3" type="audio/mp3"s>
-                <source src="audio/Luke.2.1-Luke.2.20.ogg" type="audio/ogg"s>
-                <source src="audio/Luke.2.1-Luke.2.20.wav" type="audio/wav"s>
-                <em class="error"><strong>Notice:</strong> Your browser doesn't appear to support HTML5 Audio. Please use try Firefox 3.5, Chrome, or Safari.</em>
-            </audio>
+            <p class="passage-audio" hidden>
+                <audio id="passage-audio" class="passage" controls>
+                    <!-- @todo WebM? -->
+                    <source src="audio/Luke.2.1-Luke.2.20.mp3" type="audio/mp3">
+                    <source src="audio/Luke.2.1-Luke.2.20.ogg" type="audio/ogg">
+                    <source src="audio/Luke.2.1-Luke.2.20.wav" type="audio/wav">
+                    <em class="error"><strong>Error:</strong> Your browser doesn't appear to support HTML5 Audio.</em>
+                </audio>
+            </p>
+            <p class="passage-audio-unavailable" hidden>
+                <em class="error"><strong>Error:</strong> You will not be able to do the read-along audio because your browser is not able to play MP3, Ogg, or WAV audio formats.</em>
+            </p>
+            
+            <p class="playback-rate" hidden>
+                <label for="playback-rate">Reading rate:</label>
+                <input id="playback-rate" type="range" min="0.5" max="2.0" value="1.0" step="0.1" disabled onchange='this.nextElementSibling.textContent = String(Math.round(this.valueAsNumber * 10) / 10) + "\u00D7";'>
+                <output>1&times;</output>
+            </p>
+            <p class="playback-rate-unavailable" hidden>
+                <em>(It seems your browser does not support <code>HTMLMediaElement.playbackRate</code> (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=495040" title="Bug #495040 for Firefox">Bugzilla</a>), so you will not be able to change the speech rate.)</em>
+            </p>
 
             <noscript>
                 <p class="error"><em><strong>Notice:</strong> You must have JavaScript enabled/available to try this HTML5 Audio read along.</em></p>
@@ -105,7 +131,6 @@
                 Copyright ©2001 by <a href="http://www.crosswaybibles.org" target="_blank">Crossway Bibles</a>,
                 a publishing ministry of Good News Publishers. Used by permission. All rights reserved.
                 Data obtained from the <a href="http://www.gnpcb.org/esv/share/services/" target="_blank">ESV Bible Web Service</a>.
-                <!-- @todo rel=copyright -->
                 </small>
             </footer>
         </article>
@@ -115,15 +140,59 @@
             <a href="https://plus.google.com/113853198722136596993" rel="author">Weston Ruter</a>
             (<a href="https://twitter.com/westonruter">@westonruter</a>),
             <a href="http://x-team.com/" title="My employer">X-Team</a>
+            <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons Attribution-ShareAlike 3.0 Unported License." src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a>
         </footer>
 
         <script src="read-along.js"></script>
         <script>
-        ReadAlong.init({
-            text_element: document.getElementById('passage-text'),
-            audio_element: document.getElementById('passage-audio'),
-            rate_control_element: document.getElementById('playback-rate')
-        });
+        window.addEventListener('load', function (e) {
+            var args = {
+                text_element: document.getElementById('passage-text'),
+                audio_element: document.getElementById('passage-audio')
+            };
+            
+            if (!args.audio_element.canPlayType) {
+                return;
+            }
+            if (args.audio_element.networkState === args.audio_element.NETWORK_NO_SOURCE) {
+                document.querySelector('.passage-audio-unavailable').hidden = false;
+                return;
+            }
+            
+            var supports_playback_rate = (function (audio) {
+                if (typeof audio.playbackRate !== 'number' || isNaN(audio.playbackRate)) {
+                    return false;
+                }
+                
+                // For Opera, since it doesn't currently support playbackRate and yet
+                // has it defined as 1.0, we can detect Opera support by changing
+                // the playbackRate and see if the change sticks.
+                var original_playback_rate = audio.playbackRate;
+                audio.playbackRate += 1.0;
+                var is_playback_rate_changed = (original_playback_rate !== audio.playbackRate);
+                audio.playbackRate = original_playback_rate;
+                return is_playback_rate_changed;
+            }(args.audio_element));
+            
+            if (supports_playback_rate) {
+                var rate_range_element = document.getElementById('playback-rate');
+                rate_range_element.disabled = false;
+                rate_range_element.addEventListener('change', function (e) {
+                    args.audio_element.playbackRate = this.valueAsNumber;
+                }, false);
+            }
+            else {
+                document.querySelector('.playback-rate-unavailable').hidden = false;
+            }
+
+            ReadAlong.init(args);
+            document.querySelector('.passage-audio').hidden = false;
+            if (supports_playback_rate) {
+                document.querySelector('.playback-rate').hidden = false;
+            }
+            args.text_element.classList.add('initialized');
+            
+        }, false);
         </script>
     </body>
 </html>
