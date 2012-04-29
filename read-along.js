@@ -232,6 +232,7 @@ var ReadAlong = {
          */
         document.addEventListener('keypress', function (e) {
             if (e.keyCode === 32 /*Space*/) {
+                e.preventDefault();
                 if (that.audio_element.paused) {
                     that.audio_element.play();
                 }
@@ -239,7 +240,7 @@ var ReadAlong = {
                     that.audio_element.pause();
                 }
             }
-        });
+        }, false);
 
         /**
          * First click handler sets currentTime to the word, and second click
