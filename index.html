@@ -6,11 +6,21 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
         <style>
+        html {
+            background: #333;
+            font-family: Verdana, sans-serif;
+        }
+        body {
+            background: white;
+            padding: 1em;
+            border-radius: 5em;
+            width
+        }
         h2 {
             margin-bottom: 1em;
         }
         .passage-audio {
-            
+
         }
         #passage-audio {
             /*display: block;*/
@@ -22,7 +32,7 @@
         #passage-text.speaking {
             -moz-user-select: none;
             -webkit-user-select: none;
-            -ms-user-select: none;  
+            -ms-user-select: none;
             user-select: none;
         }
         .playback-rate {
@@ -71,33 +81,18 @@
 
         <details>
             <summary>Background for this demo</summary>
-            <p>@todo My writeup</p>
-            
-            <!--
-            <details>
-            dataset
-            classList
-            Audio
-            -->
+
+<p>When I was in college, my most valuable tool for writing papers was a text-to-speech (<abbr title="text-to-speech">TTS</abbr>) program. I could paste in a draft of my paper and it would highlight each word as it was spoken, so I could give my proof-reading eyes a break and do proof-listening while I read along; I caught many mistakes I would have missed. Likewise, for powering through course readings I would copy the material into the TTS program whenever possible and speed up the reading rate; because the words are highlighted, it's easy to re-find your place if you look away and just listen for awhile. (I constantly use OS X's selected-text speech feature, but unfortunately it does not highlight words). A decade after my college days, I would have hoped that such TTS read-alongs would have become common on the Web (though there is work-in-progress <a title="chrome.tts Google Chrome Extensions API" href="http://code.google.com/chrome/extensions/tts.html">Chrome API</a> and a <a href="http://lists.w3.org/Archives/Public/public-xg-htmlspeech/2011Feb/att-0022/htmltts-draft.html" title="HTML Text to Speech (TTS) API Specification">W3C draft spec</a> now under development).</p>
+
+<p>I created an intial version of this read-along demo in December 2009, so the passage I chose was naturally the nativity story, specifically from the Gospel of Luke in the <a href="http://www.esv.org/" target="_blank">English Standard Version</a> (<abbr title="English Standard Version">ESV</abbr>). I chose a biblical passage not only in keeping with the Christmas spirit but also because the ESV has an excellent <a href="http://www.esvapi.org/" target="_blank">API</a> which allows both a passage’s text and audio to be queried. With the text and audio in hand, each of the words in the text had to be time-indexed for its begin time and duration in the corresponding audio. In the past, audio Bibles were divided into chapter segments only and that was as granular as you could go; the ESV team did the <a title="The Development of Verse-Level Audio at the ESV Online Edition" href="http://www.gnpcb.org/esv/share/about/audio/">innovation</a> of taking this granularity down to the verse-level. Unfortunately, however, the granularity is not available at the word-level. Therefore, in order to make this read-along demo work, I manually traversed the audio to find each word’s begin time and duration, and I added these time indicies to the word markup as <code>data-begin</code> and <code>data-<abbr title="duration">dur</abbr></code> attributes, akin to SMIL’s <a title="SMIL 3.0 smilText: The begin Attribute" href="http://www.w3.org/TR/SMIL3/smil-text.html#adef-textBegin" target="_blank"><code>begin</code></a> and <a title="SMIL 3.0 smilText: dur" href="http://www.w3.org/TR/SMIL3/smil-text.html#q75" target="_blank"><abbr title="duration"><code>dur</code></abbr></a> attributes. (As an aside, it took me a tedious <em>four hours</em> to manually obtain the time indices for this passage. Because of the pain endured, in 2011 I set out to find a way to automate the process of finding time indexes, and I had some success which can be found in my <a href="https://github.com/westonruter/esv-text-audio-aligner">ESV Text/Audio Aligner</a> project.)</p>
+
+<p><strong>Instructions:</strong> Upon playing the audio, the word in the text corresponding to the one currently being spoken in the audio is highlighted. When manually adjusting the seek position, the words which correspond to each audio position will be highlighted; and conversely, clicking a word causes the audio to seek to its corresponding position (and double-clicking will then cause it to start playing). <em>Thus the text itself serves as an interface for navigating the audio.</em> There is also a <strong>keyboard interface</strong> for navigating the text. Each word in the text is focusable, and upon tabbing to a word you may hit <kbd>Enter</kbd> to seek the audio to that point; there is also checkbox toggle for whether highlighted words should be auto-focused. Hitting <kbd>Spacebar</kbd> toggles play/pause.</p>
+
+<p><strong>Browser Support:</strong> The read-along demo works in the latest stable versions of Firefox, Chrome, Safari, and Opera (it may even work in Internet Explorer 9); I've also tested on iPhone and iPad (iOS 5). Safari and Chrome play the MP3 as served from the ESV API. Firefox doesn’t support MP3 so I include an OGG Vorbis <code>source</code> as well. There is also an 8kHz WAV fallback. Note that the speech rate control only works in browsers (e.g. Chrome and Safari) that implement <code>HTML5MediaElement.playbackRate</code> property; currently my detection for support in iOS 5 is failing.</p>
+
+
         </details>
 
-        <h2>Mouse/touch interface</h2>
-        <ul>
-            <li>Click the audio controls to play and pause the speech.</li>
-            <li>Click a word to seek the audio to that point, whether it is currently playing or not.</li>
-            <li>Double-click on a word to seek and play from that word.</li>
-            <li><em>Todo: Allow a span of words to be selected and for that sub-passage to be played.</em></li>
-        </ul>
-        
-        <h2>Keyboard interface</h2>
-        <ul>
-            <li><kbd>Space</kbd> toggles play/pause state.</li>
-            <li>Words in list are focusable and so can be navigated via tabbing.</li>
-            <li>Once a word is focused, you may hit <kbd>Enter</kbd> to seek the audio to that point.</li>
-            <li><em>Todo: Allow navigation of words via arrow keys, navigating up and down lines.</em></li>
-        </ul>
-            
-        
         <article>
             <h2>
                 <a href="http://www.esvbible.org/Luke+2.1-20/" title="View Luke 2:1–20 on the ESV Bible website" target="_blank">Luke 2:1–20</a>
@@ -116,7 +111,7 @@
             <p class="passage-audio-unavailable" hidden>
                 <em class="error"><strong>Error:</strong> You will not be able to do the read-along audio because your browser is not able to play MP3, Ogg, or WAV audio formats.</em>
             </p>
-            
+
             <p class="playback-rate" hidden>
                 <label for="playback-rate">Reading rate:</label>
                 <input id="playback-rate" type="range" min="0.5" max="2.0" value="1.0" step="0.1" disabled onchange='this.nextElementSibling.textContent = String(Math.round(this.valueAsNumber * 10) / 10) + "\u00D7";'>
@@ -155,7 +150,7 @@
                 </small>
             </footer>
         </article>
-        
+
         <footer>
             Demo created by
             <a href="https://plus.google.com/113853198722136596993" rel="author">Weston Ruter</a>
@@ -165,6 +160,7 @@
         </footer>
 
         <script src="read-along.js"></script>
+
         <script>
         window.addEventListener('load', function (e) {
             var args = {
@@ -172,7 +168,7 @@
                 audio_element: document.getElementById('passage-audio'),
                 autofocus_current_word: document.getElementById('autofocus-current-word').checked
             };
-            
+
             if (!args.audio_element.canPlayType) {
                 return;
             }
@@ -180,12 +176,12 @@
                 document.querySelector('.passage-audio-unavailable').hidden = false;
                 return;
             }
-            
+
             var supports_playback_rate = (function (audio) {
                 if (typeof audio.playbackRate !== 'number' || isNaN(audio.playbackRate)) {
                     return false;
                 }
-                
+
                 // For Opera, since it doesn't currently support playbackRate and yet
                 // has it defined as 1.0, we can detect Opera support by changing
                 // the playbackRate and see if the change sticks.
@@ -195,7 +191,7 @@
                 audio.playbackRate = original_playback_rate;
                 return is_playback_rate_changed;
             }(args.audio_element));
-            
+
             if (supports_playback_rate) {
                 var rate_range_element = document.getElementById('playback-rate');
                 rate_range_element.disabled = false;
@@ -206,20 +202,20 @@
             else {
                 document.querySelector('.playback-rate-unavailable').hidden = false;
             }
-            
+
             ReadAlong.init(args);
-            
+
             document.getElementById('autofocus-current-word').addEventListener('change', function (e) {
                 ReadAlong.autofocus_current_word = this.checked;
             }, false);
-            
+
             document.querySelector('.passage-audio').hidden = false;
             if (supports_playback_rate) {
                 document.querySelector('.playback-rate').hidden = false;
             }
             document.querySelector('.autofocus-current-word').hidden = false;
             document.body.classList.add('initialized');
-            
+
         }, false);
         </script>
     </body>
