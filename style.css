@@ -8,6 +8,9 @@ body {
     padding: 1em;
     border-radius: 1em;
 }
+a {
+    color: #0E2560;
+}
 h2 {
     margin-bottom: 1em;
 }
@@ -64,9 +67,17 @@ q {
 .error {
     color: red;
 }
-footer {
-    line-height: 1.1em;
+
+article > footer {
+    border-top: solid 1px gray;
+    padding-top: 1em;
     margin-top: 1em;
+}
+
+footer {
+    margin-bottom: 0.5em;
+    line-height: 1.4em;
+    font-size: small;
 }
 footer img {
     vertical-align: text-bottom;
