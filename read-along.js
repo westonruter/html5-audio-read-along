@@ -178,7 +178,7 @@ var ReadAlong = {
         }
         that.text_element.addEventListener('click', on_select_word_el, false);
         that.text_element.addEventListener('keypress', function (e) {
-            if (e.keyCode === 13 /*Enter*/) {
+            if ( (e.charCode || e.keyCode) === 13 /*Enter*/) {
                 on_select_word_el.call(this, e);
             }
         }, false);
@@ -187,7 +187,7 @@ var ReadAlong = {
          * Spacebar toggles playback
          */
         document.addEventListener('keypress', function (e) {
-            if (e.keyCode === 32 /*Space*/) {
+            if ( (e.charCode || e.keyCode) === 32 /*Space*/) {
                 e.preventDefault();
                 if (that.audio_element.paused) {
                     that.audio_element.play();
