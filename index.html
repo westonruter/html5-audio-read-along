@@ -10,7 +10,7 @@
     <body>
         <h1>HTML5 Audio Read-Along Demo</h1>
         
-        <p>[Read the <a href="https://github.com/westonruter/html5-audio-read-along#html5-audio-read-along">background and instructions</a> for this demo.]</p>
+        <p>[Read the <a target="_blank" href="https://github.com/westonruter/html5-audio-read-along#html5-audio-read-along">background and instructions</a> for this demo.]</p>
 
         <article>
             <h2>
@@ -31,7 +31,7 @@
                 <em class="error"><strong>Error:</strong> You will not be able to do the read-along audio because your browser is not able to play MP3, Ogg, or WAV audio formats.</em>
             </p>
 
-            <p class="playback-rate" hidden>
+            <p class="playback-rate" hidden title="Note that increaseing the reading rate will decrease accuracy of word highlights">
                 <label for="playback-rate">Reading rate:</label>
                 <input id="playback-rate" type="range" min="0.5" max="2.0" value="1.0" step="0.1" disabled onchange='this.nextElementSibling.textContent = String(Math.round(this.valueAsNumber * 10) / 10) + "\u00D7";'>
                 <output>1&times;</output>
@@ -72,8 +72,8 @@
             Demo created by
             <a href="https://plus.google.com/113853198722136596993" rel="author">Weston Ruter</a>
             (<a href="https://twitter.com/westonruter">@westonruter</a>),
-            <a href="http://x-team.com/" title="My employer">X-Team</a>
-            <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons Attribution-ShareAlike 3.0 Unported License." src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a>
+            <a href="http://x-team.com/" title="My employer">X-Team</a>.
+            Code licensed <a href="http://www.opensource.org/licenses/MIT" rel="license">MIT</a>/<a href="http://www.gnu.org/licenses/gpl.html" rel="license">GPL</a>.
         </footer>
 
         <script src="read-along.js"></script>
