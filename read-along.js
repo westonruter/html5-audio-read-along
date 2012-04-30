@@ -1,5 +1,3 @@
-// @todo Allow selection of a portion of text to have it read.
-// @todo Make keyboard accessible
 var ReadAlong = {
     text_element: null,
     audio_element: null,
@@ -7,10 +5,6 @@ var ReadAlong = {
     autofocus_current_word: true,
 
     words: [],
-
-    //current_begin_word: null,
-    //current_end_word: null,
-    //current_selected_range: null,
 
     init: function (args) {
         var name;
@@ -97,7 +91,6 @@ var ReadAlong = {
          * able to rely on for updating the selected word (it hovers around
          * 250ms resolution), so we add a setTimeout with the exact duration
          * of the word.
-         * @todo We will have to multiple the the seconds by the speech rate!
          */
         if (is_playing) {
             // Remove word selection when the word ceases to be spoken
@@ -152,36 +145,6 @@ var ReadAlong = {
          * Select next word (at that.audio_element.currentTime) when playing begins
          */
         that.audio_element.addEventListener('play', function (e) {
-            console.info(e.type); // debug
-
-            //var selection = window.getSelection();
-            //if (selection.rangeCount !== 0) {
-            //    var range = selection.getRangeAt(0);
-            //    var begin_word_el = that._selectParentNodeUntilWord(range.startContainer);
-            //    var end_word_el = that._selectParentNodeUntilWord(range.endContainer);
-            //
-            //    var is_passage_selected = (
-            //        !!range
-            //        &&
-            //        !range.collapsed
-            //        &&
-            //        that.text_element.contains(range.commonAncestorContainer)
-            //        &&
-            //        begin_word_el
-            //        &&
-            //        end_word_el
-            //    );
-            //
-            //    if (is_passage_selected) {
-            //        //that.current_begin_word = begin_word_node;
-            //        //that.current_end_word = end_word_node;
-            //        that.audio_element.currentTime = that.words[begin_word_el.dataset.index].begin;
-            //        that.current_selected_range = range;
-            //        selection.removeAllRanges();
-            //    }
-            //
-            //}
-
             that.selectCurrentWord();
             that.text_element.classList.add('speaking');
         }, false);
@@ -190,17 +153,8 @@ var ReadAlong = {
          * Abandon seeking the next word because we're paused
          */
         that.audio_element.addEventListener('pause', function (e) {
-            console.info(e.type); // debug
             that.selectCurrentWord(); // We always want a word to be selected
             that.text_element.classList.remove('speaking');
-
-            // if there was a selection, restore it.
-            //if (that.current_selected_range !== null) {
-            //    var selection = window.getSelection();
-            //    selection.removeAllRanges();
-            //    selection.addRange(that.current_selected_range);
-            //    that.current_selected_range = null;
-            //}
         }, false);
 
         /**
@@ -212,10 +166,6 @@ var ReadAlong = {
             }
             e.preventDefault();
 
-            //var selection = window.getSelection();
-            //that.current_begin_word = e.target;
-            //that.current_end_word = e.target;
-
             var i = e.target.dataset.index;
             that.audio_element.currentTime = that.words[i].begin + 0.01; //Note: times apparently cannot be exactly set and sometimes select too early
             that.selectCurrentWord();
@@ -226,7 +176,7 @@ var ReadAlong = {
                 on_select_word_el.call(this, e);
             }
         }, false);
-        
+
         /**
          * Spacebar toggles playback
          */
@@ -248,16 +198,14 @@ var ReadAlong = {
          * @todo Should it stop playing once the duration is over?
          */
         that.text_element.addEventListener('dblclick', function (e) {
-            console.info(e.type); // debug
             e.preventDefault();
-            //that.audio_element.play();
+            that.audio_element.play();
         }, false);
 
         /**
          * Select a word when seeking
          */
         that.audio_element.addEventListener('seeked', function (e) {
-            console.info(e.type); // debug
             that.selectCurrentWord();
 
             /**
@@ -269,7 +217,6 @@ var ReadAlong = {
                 var previousTime = audio_element.currentTime;
                 setTimeout(function () {
                     if (!audio_element.paused && previousTime === audio_element.currentTime) {
-                        console.info('unsticking'); // debug
                         audio_element.currentTime += 0.01; // Attempt to unstick
                     }
                 }, 500);
@@ -280,7 +227,6 @@ var ReadAlong = {
          * Select a word when seeking
          */
         that.audio_element.addEventListener('ratechange', function (e) {
-            console.info(e.type); // debug
             that.selectCurrentWord();
         }, false);
     },
