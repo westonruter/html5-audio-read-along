@@ -1,3 +1,9 @@
+/**
+ * HTML5 Audio Read-Along
+ * @author Weston Ruter, X-Team
+ * @license MIT/GPL
+ * https://github.com/westonruter/html5-audio-read-along
+ */
 var ReadAlong = {
     text_element: null,
     audio_element: null,

@@ -35,9 +35,11 @@ h2 {
     -ms-user-select: none;
     user-select: none;
 }
+.autofocus-current-word,
 .playback-rate {
-    margin-left: 2em;
+    font-size: smaller;
 }
+.autofocus-current-word label,
 .playback-rate label {
     font-weight: bold;
 }
