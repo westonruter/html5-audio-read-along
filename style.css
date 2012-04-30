@@ -15,17 +15,9 @@ h2 {
     margin-bottom: 1em;
 }
 .passage-audio {
-    /*position: fixed;*/
-    /*top: 3px;*/
-    /*left: 1em;*/
-    /*right: 1em;*/
     height: 2em;
 }
 #passage-audio {
-    /*display: block;*/
-    /*margin-top: 1.5em;*/
-    /*margin-bottom: 1.5em;*/
-    /*height: 2em;*/
     width: 100%;
     max-height: 2em;
 }
@@ -55,9 +47,10 @@ q {
 .verse-start {
     line-height: 0;
 }
+.initialized span[data-begin]:focus,
 .initialized span[data-begin]:hover {
     background-color: #FFFFCA;
-    box-shadow: 0px 0px 4px orange;
+    box-shadow: 0px 0px 4px #FFFFCA;
 }
 .initialized span[data-begin].speaking {
     background-color: yellow;
