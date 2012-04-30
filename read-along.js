@@ -235,16 +235,5 @@ var ReadAlong = {
         that.audio_element.addEventListener('ratechange', function (e) {
             that.selectCurrentWord();
         }, false);
-    },
-
-    _selectParentNodeUntilWord: function (node) {
-        if ( !node || !this.text_element.contains(node) ){
-            return null;
-        }
-        var is_word_node = (node.nodeType === 1 && node.dataset.index);
-        if (is_word_node) {
-            return node;
-        }
-        return this._selectParentNodeUntilWord(node.parentNode);
     }
 };
