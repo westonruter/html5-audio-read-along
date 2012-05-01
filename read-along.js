@@ -7,7 +7,6 @@
 var ReadAlong = {
     text_element: null,
     audio_element: null,
-    rate_range_element: null,
     autofocus_current_word: true,
 
     words: [],
