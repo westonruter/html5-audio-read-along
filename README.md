@@ -1,6 +1,6 @@
 <h1>HTML5 Audio Read-Along</h1>
 
-<a href="http://westonruter.github.com/html5-audio-read-along/"><img src="https://github.com/westonruter/html5-audio-read-along/raw/master/screenshot.png?3" alt="Screenshot of app" width="240"></a>
+<a href="http://westonruter.github.com/html5-audio-read-along/" title="Jump to live demo"><img src="https://github.com/westonruter/html5-audio-read-along/raw/master/screenshot.png?3" alt="Screenshot of app" width="340"></a>
 
 <p><em>Jump straight to the <a href="http://westonruter.github.com/html5-audio-read-along/">live demo</a>.</em></p>
 
