@@ -22,3 +22,6 @@
 <h2>Credits</h2>
 <p>Demo created by <a href="https://plus.google.com/113853198722136596993" rel="author">Weston Ruter</a> (<a href="https://twitter.com/westonruter">@westonruter</a>), <a href="http://x-team.com/" title="My employer">X-Team</a>. Code is licensed <a href="http://www.opensource.org/licenses/MIT" rel="license">MIT</a>/<a href="http://www.gnu.org/licenses/gpl.html" rel="license">GPL</a>.</p>
 <p>Scripture taken from The Holy Bible, English Standard Version. Copyright ©2001 by <a href="http://www.crosswaybibles.org" target="_blank">Crossway Bibles</a>, a publishing ministry of Good News Publishers. Used by permission. All rights reserved. Data obtained from the <a href="http://www.gnpcb.org/esv/share/services/" target="_blank">ESV Bible Web Service</a>.
+
+<hr>
+<p><small>I have put redirects from my blog to GitHub, so the comments on my blog are no longer accessible there. For archive purposes, I've posted the <a href="http://westonruter.github.com/html5-audio-read-along/wordpress-comment-archive.html">raw comments</a> to gh-pages</a>.</small></p>
